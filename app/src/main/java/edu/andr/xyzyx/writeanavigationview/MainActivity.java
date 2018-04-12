@@ -3,6 +3,7 @@ package edu.andr.xyzyx.writeanavigationview;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +11,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,firstFragment.OnFragmentInteractionListener,secondFragment.OnFragmentInteractionListener {
 
     private FragmentManager fManager;
     private FragmentTransaction fragmentTransaction;
@@ -87,5 +89,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer=(DrawerLayout)findViewById(R.id.drawerlayout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.i("test","uri get"+uri.toString());
+        if(uri.toString().equals("2")){
+            fragment=new secondFragment();
+            Log.i("test","create second fragment");
+            fragmentTransaction=fManager.beginTransaction();
+            Log.i("test","beginTransaction");
+            fragmentTransaction.replace(R.id.fg_container,fragment);
+            Log.i("test","replace");
+            fragmentTransaction.commit();
+            Log.i("test","commit");
+        }
     }
 }
